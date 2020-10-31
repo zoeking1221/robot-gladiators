@@ -33,9 +33,14 @@ var fightOrSkip = function() {
 
 
 var fight = function(enemy) {
-    
+    // keep track of who goes first
+    var isPlayerTurn = true;
+        if (Math.random() > 0.5) {
+            isPlayerTurn = false;
+        }
     // repeat and execute as long as the enemy-robot is alive
     while(enemy.health > 0 && playerInfo.health > 0) {
+        if (isPlayerTurn) {
         // ask player if they'd like to fight or skip using fightOrSkip function
         if (fightOrSkip()) {
             //if true, leave fight by breaking loop
@@ -62,7 +67,10 @@ var fight = function(enemy) {
             } else {
                 window.alert(enemy.name + " still has " + enemy.health + " health left.");
             }
-  
+
+            // player gets attacked first
+        }   else {
+           
             // remove player's health by subtracting the amount set in the enemy.attack variable
             // generate random damage value based on enemy's attack power
             var damage = randomNumber(enemy.attack - 3, enemy.attack);
@@ -80,8 +88,10 @@ var fight = function(enemy) {
                     window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
                 }
             }
-    
+            // switch turn order for next round
+            isPlayerTurn = !isPlayerTurn;
         } 
+};
    
               
 
@@ -141,7 +151,7 @@ var endGame = function () {
 var shop = function() {
     // ask player what they'd like to do
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRATE your attack, or LEAVE the store? Please enter 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
         );
     shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt) {
